@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1018">
+  <meta name="description" content="YPEDIA - Your Personal Knowledge Space">
+  <title>YPEDIA — Your Personal Knowledge Space</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- LOADING SCREEN -->
+  <section class="loading-screen" id="loadingScreen">
+    <img
+      src="ty.png"
+      alt="YPEDIA Logo"
+      class="loading-logo"
+      onerror="this.style.display='none'"
+    >
+
+    <h1>YPEDIA</h1>
+    <p>YOUR PERSONAL KNOWLEDGE SPACE</p>
+
+    <div class="loading-track">
+      <div id="loadingBar"></div>
+    </div>
+
+    <div class="loading-info">
+      <span id="loadingText">Menyiapkan ruang digital Anda...</span>
+      <span id="loadingPercent">0%</span>
+    </div>
+
+    <div class="creator-credit">
+      Produced by Yogi Pratama<br>
+      RPL STUDENT AT SMKN 1 Galang
+    </div>
+  </section>
+
+  <!-- LOGIN SCREEN -->
+  <section class="login-screen hidden" id="loginScreen">
+    <div class="login-card">
+
+      <img
+        src="ty.png"
+        alt="YPEDIA Logo"
+        class="login-logo"
+        onerror="this.style.display='none'"
+      >
+
+      <p class="eyebrow">SELAMAT DATANG DI RUANGMU</p>
+      <h1>Selamat Datang</h1>
+
+      <p class="login-description">
+        Ruang pengetahuan pribadimu siap digunakan
+      </p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Masukkan username"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              placeholder="Masukkan password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              id="togglePassword"
+              aria-label="Tampilkan password"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <p id="loginError" role="alert"></p>
+
+        <button type="submit" class="primary-button">
+          MASUK
+        </button>
+      </form>
+
+      <p class="login-footer">
+        Satu ruang kecil untuk semua hal yang berarti
+      </p>
+    </div>
+  </section>
+
+  <!-- MAIN APPLICATION -->
+  <div class="app-screen hidden" id="appScreen">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+        <img
+          src="ty.png"
+          alt="YPEDIA Logo"
+          onerror="this.style.display='none'"
+        >
+
+        <div>
+          <strong>YPEDIA</strong>
+          <small>PERSONAL SPACE</small>
+        </div>
+      </div>
+
+      <div class="sidebar-label">RUANG KERJA</div>
+
+      <nav id="mainNavigation">
+        <button class="nav-item active" data-page="dashboard">
+          <span>⌂</span> Dashboard
+        </button>
+
+        <button class="nav-item" data-page="summaries">
+          <span>▤</span> Rangkuman
+        </button>
+
+        <button class="nav-item" data-page="schedule">
+          <span>▦</span> Jadwal
+        </button>
+
+        <button class="nav-item" data-page="music">
+          <span>♫</span> Koleksi Musik
+        </button>
+
+        <button class="nav-item" data-page="memories">
+          <span>▧</span> Kenangan
+        </button>
+
+        <button class="nav-item" data-page="journal">
+          <span>✎</span> Jurnal Pribadi
+        </button>
+
+        <div class="sidebar-label">PERSONAL</div>
+
+        <button class="nav-item" data-page="favorites">
+          <span>♡</span> Favorit
+        </button>
+
+        <button class="nav-item" data-page="progress">
+          <span>◷</span> Progres Belajar
+        </button>
+
+        <button class="nav-item" data-page="profile">
+          <span>♙</span> Profil Saya
+        </button>
+
+        <button class="nav-item" data-page="settings">
+          <span>⚙</span> Pengaturan
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="user-avatar">Y</div>
+
+          <div>
+            <strong>Gondollz</strong>
+            <small>Akun pribadi</small>
+          </div>
+        </div>
+
+        <button id="logoutButton" class="logout-button">
+          Keluar
+        </button>
+      </div>
+    </aside>
+
+    <!-- MOBILE SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <button
+          id="menuButton"
+          class="menu-button"
+          type="button"
+          aria-label="Buka navigasi"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <div>
+          <span class="topbar-label">RUANG PRIBADIMU</span>
+          <h2 id="pageTitle">Dashboard</h2>
+        </div>
+
+        <div class="topbar-right">
+          <span class="status-dot"></span>
+          <span>Ruang Kerja Saya</span>
+        </div>
+      </header>
+
+      <div class="page-container">
+
+        <!-- DASHBOARD -->
+        <section class="page active" id="page-dashboard">
+
+          <div class="welcome-banner">
+            <div>
+              <span class="eyebrow">RUANGMU, CERITAMU</span>
+
+              <h1>
+                Beri ruang untuk<br>
+                hal yang berarti.
+              </h1>
+
+              <p>
+                Satu tempat untuk belajar, mengatur, dan menyimpan kenangan.
+              </p>
+            </div>
+
+            <div class="banner-decoration">Y.</div>
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">RINGKASAN</span>
+              <h2>Ruang kerjamu</h2>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+
+            <article class="stat-card">
+              <span>Rangkuman Saya</span>
+              <strong id="summaryCount">0</strong>
+              <small>Catatan tersimpan</small>
+            </article>
+
+            <article class="stat-card">
+              <span>Jadwal Saya</span>
+              <strong id="scheduleCount">0</strong>
+              <small>Tugas belum selesai</small>
+            </article>
+
+            <article class="stat-card">
+              <span>Kenangan Saya</span>
+              <strong id="memoryCount">0</strong>
+              <small>Foto tersimpan</small>
+            </article>
+
+            <article class="stat-card">
+              <span>Musik Saya</span>
+              <strong id="musicCount">10</strong>
+              <small>Koleksi musik</small>
+            </article>
+
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">AKSES CEPAT</span>
+              <h2>Jelajahi ruangmu</h2>
+            </div>
+          </div>
+
+          <div class="quick-grid">
+
+            <button class="quick-card" data-open="summaries">
+              <span>▤</span>
+              <strong>Rangkuman</strong>
+              <small>Koleksi pengetahuanmu</small>
+            </button>
+
+            <button class="quick-card" data-open="schedule">
+              <span>▦</span>
+              <strong>Jadwal</strong>
+              <small>Atur kegiatanmu</small>
+            </button>
+
+            <button class="quick-card" data-open="music">
+              <span>♫</span>
+              <strong>Musik Saya</strong>
+              <small>Musik pilihanmu</small>
+            </button>
+
+            <button class="quick-card" data-open="memories">
+              <span>▧</span>
+              <strong>Kenangan</strong>
+              <small>Simpan momenmu</small>
+            </button>
+
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">AKTIVITAS TERBARU</span>
+              <h2>Baru ditambahkan</h2>
+            </div>
+          </div>
+
+          <div id="recentActivity" class="content-card">
+            Belum ada aktivitas. Mulai bangun ruang pribadimu.
+          </div>
+
+        </section>
+
+        <!-- SUMMARIES -->
+        <section class="page" id="page-summaries">
+          <div class="page-intro">
+            <span class="eyebrow">KOLEKSI PENGETAHUANMU</span>
+            <h1>Rangkuman Saya</h1>
+            <p>
+              Kumpulkan pelajaran, catatan, dan ide dalam satu tempat.
+            </p>
+          </div>
+
+          <div id="summariesContent"></div>
+        </section>
+
+        <!-- SCHEDULE -->
+        <section class="page" id="page-schedule">
+          <div class="page-intro">
+            <span class="eyebrow">RENCANAKAN HARIMU</span>
+            <h1>Jadwal Saya</h1>
+            <p>
+              Atur tugas dan pantau semua rencanamu.
+            </p>
+          </div>
+
+          <div id="scheduleContent"></div>
+        </section>
+
+        <!-- MUSIC -->
+        <section class="page" id="page-music">
+          <div class="page-intro">
+            <span class="eyebrow">MUSIK PILIHANMU</span>
+            <h1>Koleksi Musik</h1>
+            <p>
+              Musikmu, momenmu.
+            </p>
+          </div>
+
+          <div id="musicContent"></div>
+        </section>
+
+        <!-- MEMORIES -->
+        <section class="page" id="page-memories">
+          <div class="page-intro">
+            <span class="eyebrow">MOMEN YANG BERHARGA</span>
+            <h1>Kenangan Saya</h1>
+            <p>
+              Kumpulan momen kecil yang berarti.
+            </p>
+          </div>
+
+          <div id="memoriesContent"></div>
+        </section>
+
+        <!-- JOURNAL -->
+        <section class="page" id="page-journal">
+          <div class="page-intro">
+            <span class="eyebrow">HALAMAN MILIKMU</span>
+            <h1>Jurnal Pribadi</h1>
+            <p>
+              Tuliskan pikiran dan ceritamu.
+            </p>
+          </div>
+
+          <div id="journalContent"></div>
+        </section>
+
+        <!-- FAVORITES -->
+        <section class="page" id="page-favorites">
+          <div class="page-intro">
+            <span class="eyebrow">KOLEKSI PILIHANMU</span>
+            <h1>Favorit</h1>
+            <p>
+              Semua hal favoritmu dalam satu tempat.
+            </p>
+          </div>
+
+          <div id="favoritesContent"></div>
+        </section>
+
+        <!-- PROGRESS -->
+        <section class="page" id="page-progress">
+          <div class="page-intro">
+            <span class="eyebrow">TERUS BERKEMBANG</span>
+            <h1>Progres Belajar</h1>
+            <p>
+              Lihat perkembangan perjalanan belajarmu.
+            </p>
+          </div>
+
+          <div id="progressContent"></div>
+        </section>
+
+        <!-- PROFILE -->
+        <section class="page" id="page-profile">
+          <div class="page-intro">
+            <span class="eyebrow">TENTANG DIRIMU</span>
+            <h1>Profil Saya</h1>
+            <p>
+              Informasi pribadi dan identitasmu.
+            </p>
+          </div>
+
+          <div id="profileContent"></div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section class="page" id="page-settings">
+          <div class="page-intro">
+            <span class="eyebrow">ATUR SESUAI KEINGINANMU</span>
+            <h1>Pengaturan</h1>
+            <p>
+              Kelola ruang kerja pribadimu.
+            </p>
+          </div>
+
+          <div id="settingsContent"></div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- FIXED MUSIC PLAYER -->
+    <section class="music-player" aria-label="Pemutar musik">
+
+      <div class="player-track">
+        <img
+          id="playerCover"
+          class="player-cover"
+          src="album1.jpg"
+          alt="Sampul album"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="player-track-info">
+          <strong id="playerTitle">Belum ada lagu</strong>
+          <small id="playerArtist">Pilih lagu untuk memulai</small>
+        </div>
+      </div>
+
+      <div class="player-controls">
+        <button
+          id="previousTrack"
+          type="button"
+          aria-label="Lagu sebelumnya"
+          title="Sebelumnya"
+        >|◀</button>
+
+        <button
+          id="playPause"
+          type="button"
+          aria-label="Putar atau jeda"
+          title="Putar / Jeda"
+        >▶</button>
+
+        <button
+          id="nextTrack"
+          type="button"
+          aria-label="Lagu berikutnya"
+          title="Berikutnya"
+        >▶|</button>
+      </div>
+
+      <div class="player-progress">
+        <span id="currentTime">0:00</span>
+
+        <input
+          id="progressBar"
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+          aria-label="Progres musik"
+        >
+
+        <span id="duration">0:00</span>
+      </div>
+
+      <audio id="audioElement" preload="metadata"></audio>
+    </section>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script src="storage.js"></script>
+  <script src="music.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
